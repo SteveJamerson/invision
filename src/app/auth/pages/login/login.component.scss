@@ -1,0 +1,22 @@
+@import './../../../stylesheets/mixins/breakpoints';
+@import './../../../stylesheets/variables';
+
+.login main {
+  min-height: 100vh;
+  height: 100%;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 5rem 1rem;
+  background-color: $green;
+  color: $white;
+
+  @include for-min-md {
+    padding: 5rem;
+  }
+}
