@@ -1,0 +1,28 @@
+@each $color, $value in $theme-colors {
+  .text-#{$color} {
+    color: $value!important;
+  }
+}
+
+@each $w, $value in $weight {
+  .fw-#{$w} {
+    font-weight: $value;
+  }
+}
+
+@each $w, $value in $width {
+  .w-#{$w} {
+    @if $w == auto {
+      width: $w;
+    }
+    @else {
+      width: #{$w * 100/12}+ "%";
+    }
+  }
+}
+
+@each $position in $positions {
+  .text-#{$position} {
+    text-align: $position;
+  }
+}
