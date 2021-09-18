@@ -1,0 +1,48 @@
+.m-auto {
+  margin: auto;
+}
+.mx-auto {
+  margin: {
+    left:  auto;
+    right:  auto;
+  }
+}
+.my-auto {
+  margin: {
+    top:  auto;
+    bottom:  auto;
+  }
+}
+
+@each $position in $positions {
+  .m-#{$position}-auto {
+    margin-#{$position}: auto;
+  }
+}
+
+
+@each $spacer, $value in $spacers {
+  .m-#{$spacer} {
+    margin: $value;
+  }
+  .mx-#{$spacer} {
+    margin: {
+      left:  $value;
+      right:  $value;
+    }
+  }
+  .my-#{$spacer} {
+    margin: {
+      top:  $value;
+      bottom:  $value;
+    }
+  }
+
+  @each $position in $positions {
+    .m-#{$position}-#{$spacer} {
+      margin-#{$position}: $value;
+    }
+  }
+}
+
+$width: auto, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 !default;
