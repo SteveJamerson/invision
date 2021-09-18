@@ -14,3 +14,9 @@
 @import './app/stylesheets/text';
 @import './app/stylesheets/utilities';
 
+@import './app/stylesheets/carousel';
+
+
+body {
+  background-color: $green;
+}
