@@ -55,31 +55,31 @@ h1 {
 }
 
 h1 {
-  --size: $font-size-h1;
+  --size: #{$font-size-h1};
 }
 
 h2 {
-  --size: $font-size-h2;
+  --size: #{$font-size-h2};
 }
 
 h3 {
-  --size: $font-size-h3;
+  --size: #{$font-size-h3};
 }
 
 h4 {
-  --size: $font-size-h4;
+  --size: #{$font-size-h4};
 }
 
 h5 {
-  --size: $font-size-h5;
+  --size: #{$font-size-h5};
 }
 
 h6 {
-  --size: $font-size-h6;
+  --size: #{$font-size-h6};
 }
 
 p {
-  --size: $font-size-body;
+  --size: #{$font-size-body};
   margin: {
     top: 0;
     bottom: 0.75rem;
