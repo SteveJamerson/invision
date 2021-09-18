@@ -1,0 +1,24 @@
+:root {
+  --containerSize: auto;
+  --gutter: 1rem;
+
+  @include for-min-xs {
+    --containerSize: 540px;
+  }
+
+  @include for-min-sm {
+    --containerSize: 720px;
+  }
+
+  @include for-min-md {
+    --containerSize: 860px;
+  }
+
+  @include for-min-lg {
+    --containerSize: 1120px;
+  }
+
+  @include for-min-xl {
+    --containerSize: 1320px;
+  }
+}
