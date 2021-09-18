@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@import './app/stylesheets/functions';
+
+@import './app/stylesheets/mixins/breakpoints';
+@import './app/stylesheets/mixins/utilities';
+
+
+@import './app/stylesheets/variables';
+
+@import './app/stylesheets/reset';
+@import './app/stylesheets/root';
+@import './app/stylesheets/grid';
+
+@import './app/stylesheets/text';
+@import './app/stylesheets/utilities';
+
