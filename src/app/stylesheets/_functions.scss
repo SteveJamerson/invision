@@ -1,0 +1,19 @@
+@use "sass:math";
+//https://css-tricks.com/css-variables-calc-rgb-enforcing-high-contrast-colors/
+//bootstrap
+@function color-contrast($color, $dark: $color-dark, $light: $color-white) {
+  $red: red($color);
+  $green: green($color);
+  $blue: blue($color);
+  $result: math.div($red * 299 + $green * 587 + $blue * 114, 1000);
+  @if ($result >= 150) {
+    @return $dark;
+  } @else {
+    @return $light;
+  }
+}
+
+//https://sass-lang.com/documentation/modules/color
+@function color-adjust($color, $red, $green, $blue) {
+  @return adjust-color($color, $red: $red, $green: $green, $blue: $blue);
+}
