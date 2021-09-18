@@ -1,25 +1,79 @@
 <div class="login container-fluid">
   <main class="row m-0">
     <div class="slide col-12 col-sm-6">
-      <div class="w-12">
         <div class="row lex-column align-items-center">
-          <app-carousel>
+          <app-carousel class="col-12 col-md-10 mx-auto">
             <div class="carousel-item" *ngFor="let slide of slides; index as i">
               <img
-                src="./../../../../assets/images/login/Data@2x.png"
-                alt=""
-                srcset=""
+                src={{slide.image}}
+                alt="imagem ilustrativa"
+                title="ilustração"
                 class="m-bottom-5"
               />
-              <h5>Marcenas mattis egestas</h5>
+              <h5>{{slide.title}}</h5>
               <p>
-                Erdum et malesuada fames ac ante ileum primmer in faucibus
-                uspendisse porta.
+                {{
+                  slide.text
+                }}
               </p>
             </div>
           </app-carousel>
         </div>
-      </div>
     </div>
+    <form class="col-12 col-sm-6">
+      <h2 class="m-left-auto text-dark fw-700">Invision</h2>
+      <h3 class="m-5">Welcome to Invision</h3>
+      <div class="row">
+        <div class="col-12">
+          <div class="input-group">
+            <label for="email" class="input-label">Users name or Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="input-field"
+              required
+            />
+            <!-- <small class="input-invalid">Invalid</small> -->
+          </div>
+          <div class="input-group">
+            <label for="password" class="input-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="input-field"
+              required
+            />
+            <!-- <small class="input-invalid">Invalid</small> -->
+          </div>
+        </div>
+        <div class="col-12 text-right">
+          <button type="button" class="button button-inline ">
+            Forgot password?
+          </button>
+        </div>
+      </div>
+      <button type="button" class="button button-primary button-sign m-4">
+        Sign in
+      </button>
+      <hr />
+      <button
+        type="button"
+        class="button button-icon button-secondary shadow m-4"
+      >
+        <app-google></app-google>
+        Sign in with Google
+      </button>
+      <p>
+        New <strong>Invision</strong>?
+        <button
+          type="button"
+          class="button button-link button-inline text-green"
+        >
+          Create Account
+        </button>
+      </p>
+    </form>
   </main>
 </div>

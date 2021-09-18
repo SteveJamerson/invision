@@ -6,17 +6,60 @@
   height: 100%;
 }
 
-.slide {
+.slide, form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding: 5rem 1rem;
-  background-color: $green;
-  color: $white;
 
   @include for-min-md {
     padding: 5rem;
   }
+}
+
+.slide {
+  background-color: $green;
+  color: $white;
+}
+
+.input-field {
+  text-indent: 1rem;
+}
+
+
+form {
+  font-size: .875rem;
+
+  h3 {
+    --size: 1.5rem;
+  }
+
+  .button-sign {
+    min-width: 175px
+  }
+}
+
+hr {
+  overflow: visible;
+  width: 100%;
+  max-width: 250px;
+  padding: 0;
+  border: none{
+    top: 1px solid $gray-900;
+  }
+  color: $gray-900;
+  text-align: center;
+  opacity: 1;
+}
+
+hr:after {
+  content: "Or";
+  display: inline-block;
+  position: relative;
+  top: -1.1rem;
+  font-size: .875rem;
+  padding: 0 0.25rem;
+  background: white;
 }
