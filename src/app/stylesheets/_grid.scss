@@ -1,0 +1,53 @@
+.container {
+  width: var(--containerSize);
+  display: block;
+  margin: 0 auto;
+}
+.container-fluid {
+  width: 100%;
+  display: block;
+}
+
+$cols: 12,11,10,9,8,7,6,5,4,3,2,1 !default;
+
+@each $col in $cols {
+  .col-#{$col} {
+    max-width: #{$col * 100/12}+ "%" !important;
+  }
+}
+
+@each $breakpoint, $value in $breakpoints {
+  @each $col in $cols {
+    @media (min-width: $value+"px"){
+      .col-#{$breakpoint}-#{$col} {
+        max-width: #{$col * 100/12}+ "%"!important;
+      }
+    }
+  }
+}
+
+[class*="col-"] {
+  flex: 0 0 auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: {
+    right: -1rem;
+    left: -1rem;
+  };
+
+  &>* {
+    width: 100%;
+    max-width: 100%;
+    padding: {
+      left: var(--gutter);
+      right: var(--gutter);
+    }
+  }
+}
+
+.col {
+  flex: 1 0 0%
+}
