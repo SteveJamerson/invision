@@ -1,0 +1,40 @@
+.input {
+  &-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &+& {
+      margin-top: 1rem;
+    }
+  }
+
+  &-invalid {
+    color: $invalid;
+    text-align: right;
+    display: block;
+  }
+
+  &-field {
+    display: block;
+    width: 100%;
+    font: {
+      size: 1rem;
+      weight: 400;
+    }
+    border: 0px solid $gray-900 {
+      bottom-width: 1px;
+    }
+    transition: 0.3s;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+}
