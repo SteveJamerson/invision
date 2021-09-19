@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyDBIgAfk4SL9HeZcwEscjE_Z3AZ2ArtBzE",
+    authDomain: "invision-db.firebaseapp.com",
+    projectId: "invision-db",
+    storageBucket: "invision-db.appspot.com",
+    messagingSenderId: "354415540098",
+    appId: "1:354415540098:web:1254f466ae721cbe40419b",
+    measurementId: "G-5Q85MPS9QN"
+  }
 };
 
 /*
