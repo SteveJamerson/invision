@@ -27,6 +27,10 @@
       height: auto;
     }
   }
+
+  &:disabled {
+    opacity: .7;
+  }
 }
 
 
@@ -35,7 +39,7 @@
     background-color: $value;
     color: color-contrast($value, $color-body, $white);
 
-    &:hover {
+    &:not(:disabled):hover {
       background: {
         color: darken($value, 5%);
       }

@@ -21,7 +21,7 @@
   }
 }
 
-@each $position in $positions {
+@each $position in append($positions, center) {
   .text-#{$position} {
     text-align: $position;
   }
