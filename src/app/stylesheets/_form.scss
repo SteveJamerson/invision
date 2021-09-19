@@ -9,12 +9,6 @@
     }
   }
 
-  &-invalid {
-    color: $invalid;
-    text-align: right;
-    display: block;
-  }
-
   &-field {
     display: block;
     width: 100%;
@@ -36,5 +30,16 @@
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1;
+  }
+
+  &-invalid {
+    border-color: $invalid;
+  }
+
+  &-invalidation {
+    color: $invalid;
+    text-align: right;
+    display: block;
+    line-height: 2;
   }
 }

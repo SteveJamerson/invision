@@ -43,9 +43,13 @@
               name="name"
               id="name"
               class="input-field"
+              [class.input-invalid]="name.dirty && (name.hasError('required') || name.hasError('minlength'))"
               required
             />
-            <!-- <small class="input-invalid">Invalid</small> -->
+            <small class="input-invalidation" *ngIf="name.dirty && name.hasError('required')">Este campo não pode ser vazio</small>
+            <small class="input-invalidation" *ngIf="name.dirty && name.hasError('minlength')">
+              Minimo de 3 Caracteres.
+            </small>
           </div>
           <div class="input-group">
             <label for="email" class="input-label">Users name or Email</label>
@@ -55,9 +59,13 @@
               name="email"
               id="email"
               class="input-field"
+              [class.input-invalid]="email.dirty && (email.hasError('required') || email.hasError('email'))"
               required
             />
-            <!-- <small class="input-invalid">Invalid</small> -->
+            <small class="input-invalidation" *ngIf="email.dirty && email.hasError('required')">Este campo não pode ser vazio</small>
+            <small class="input-invalidation" *ngIf="email.dirty && email.hasError('email')">
+              o e-mail está incorreto
+            </small>
           </div>
           <div class="input-group" *ngIf="configs.is != 'forgot'">
             <label for="password" class="input-label">Password</label>
@@ -67,9 +75,13 @@
               name="password"
               id="password"
               class="input-field"
+              [class.input-invalid]="password.dirty && (password.hasError('required') || password.hasError('minlength'))"
               required
             />
-            <!-- <small class="input-invalid">Invalid</small> -->
+            <small class="input-invalidation" *ngIf="password.dirty && password.hasError('required')">Este campo não pode ser vazio</small>
+            <small class="input-invalidation" *ngIf="password.dirty && password.hasError('minlength')">
+              Minimo de 6 Caracteres.
+            </small>
           </div>
         </div>
         <div class="col-12 text-right">
