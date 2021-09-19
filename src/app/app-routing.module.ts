@@ -3,9 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: 'dashboard',
+    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+  },
+  {
     path: '',
     loadChildren: () => import('./auth/pages/pages.module').then(m => m.PagesModule)
   },
+
   {
     path: '**',
     pathMatch: 'full',
