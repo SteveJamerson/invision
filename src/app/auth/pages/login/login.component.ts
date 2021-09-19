@@ -86,6 +86,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.createForm();
     this.changeAuthAction('signIn');
+    this.authService.authState$?.subscribe(
+      (e) => {
+        if(e) {
+          this.router.navigate(['/dashboard']);
+        }
+      }
+    )
   }
 
   private createForm(): void {
