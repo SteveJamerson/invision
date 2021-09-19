@@ -1,11 +1,11 @@
-import { ElementRef, Injectable, ViewChild } from '@angular/core';
+import { ElementRef, Injectable, OnDestroy, ViewChild } from '@angular/core';
 import { fromEvent, interval, merge, Subscription } from 'rxjs';
 import { delay, takeUntil, takeWhile} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CarouselService {
+export class CarouselService{
 
   @ViewChild('carousel') carousel: ElementRef | undefined;
 
@@ -16,7 +16,7 @@ export class CarouselService {
   indexStart: number = 0;
   indexFinish?: number;
   indexAuto: number = 0;
-  auto?: any = true;
+  loop?: Subscription;
 
   constructor() { }
 
@@ -37,21 +37,7 @@ export class CarouselService {
 
     document.querySelectorAll('img').forEach(i => i.ondragstart = () => false);
 
-    interval(5000)
-      .pipe(
-        takeWhile(() => {
-          return true
-        }),
-      )
-      .subscribe(()=> {
-        if(
-          this.auto
-        ) {
-          this.indexAuto >= this.childrens.length-1 ? this.indexAuto = 0 : this.indexAuto++;
-          this.select(this.indexAuto)
-        }
-      })
-
+    this.loop = this.auto();
 
     merge(mousedown, touchstart)
       .subscribe(
@@ -59,15 +45,14 @@ export class CarouselService {
           this.offsetX = eventInit.screenX || eventInit.touches[0].screenX;
           this.indexStart = Math.round(eventInit.target.scrollLeft / this.size);
 
+          this.loop?.unsubscribe()
+
           merge(mousemove, touchmove)
             .pipe(
-              takeUntil(mouseup || touchend),
-              delay(50)
+              takeUntil(mouseup || touchend)
             )
             .subscribe(
               (eventMove: any) => {
-
-                this.auto = false;
 
                 let screenX = eventMove.screenX || eventMove.touches[0].screenX;
 
@@ -86,10 +71,11 @@ export class CarouselService {
                   this.indexFinish = 0;
                 }
 
-                this.select(this.indexFinish)
-              }
+                this.select(this.indexFinish);
+              },
+              () => {},
+              () => {this.loop = this.auto()}
             )
-
         }
       )
   }
@@ -100,7 +86,19 @@ export class CarouselService {
       block: "center",
     })
     this.selected = index;
-    this.auto = true;
+  }
+
+  auto(time: number = 5000): Subscription {
+    return interval(time)
+    .pipe(
+      takeWhile(() => {
+        return true
+      }),
+    )
+    .subscribe(()=> {
+        this.indexAuto >= this.childrens.length-1 ? this.indexAuto = 0 : this.indexAuto++;
+        this.select(this.indexAuto)
+    })
   }
 
 }
