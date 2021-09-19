@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { CarouselService } from 'src/app/core/services/carousel.service';
 
 @Component({
   selector: 'app-login',
@@ -6,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
+
+
+  @ViewChild('carousel') carousel: ElementRef | undefined | any
 
   slides = [
     {
@@ -35,9 +39,20 @@ export class LoginComponent implements OnInit {
     },
   ]
 
-  constructor() { }
+  constructor(
+    readonly carouselService: CarouselService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    this.carouselService.init(this.carousel)
+  }
+
+  log(msg: any):void {
+    console.log(msg);
+
   }
 
 }

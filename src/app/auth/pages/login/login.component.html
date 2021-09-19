@@ -2,22 +2,35 @@
   <main class="row m-0">
     <div class="slide col-12 col-sm-6">
         <div class="row lex-column align-items-center">
-          <app-carousel class="col-12 col-md-10 mx-auto">
-            <div class="carousel-item" *ngFor="let slide of slides; index as i">
-              <img
-                src={{slide.image}}
-                alt="imagem ilustrativa"
-                title="ilustração"
-                class="m-bottom-5"
-              />
-              <h5>{{slide.title}}</h5>
-              <p>
-                {{
-                  slide.text
-                }}
-              </p>
+          <div class="carousel">
+            <div class="carousel-items" #carousel>
+              <div class="carousel-item" *ngFor="let slide of slides; index as i">
+                <img
+                  src={{slide.image}}
+                  alt="imagem ilustrativa"
+                  title="ilustração"
+                  class="m-bottom-5"
+                />
+                <h5>{{slide.title}}</h5>
+                <p>
+                  {{
+                    slide.text
+                  }}
+                </p>
+              </div>
             </div>
-          </app-carousel>
+            <div class="carousel-nav">
+              <input
+                  *ngFor="let slide of slides; index as i"
+                  type="radio"
+                  name="carousel-select"
+                  class="dot"
+                  [checked]="i == this.carouselService.selected ? true : false"
+                  (click)="this.carouselService.select(i)"
+                />
+            </div>
+          </div>
+
         </div>
     </div>
     <form class="col-12 col-sm-6">
