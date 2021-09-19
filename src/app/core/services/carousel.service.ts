@@ -85,7 +85,7 @@ export class CarouselService{
       behavior: "smooth",
       block: "center",
     })
-    this.selected = index;
+    this.selected = this.indexAuto = index;
   }
 
   auto(time: number = 5000): Subscription {
