@@ -1,6 +1,6 @@
 import { ElementRef, Injectable, ViewChild } from '@angular/core';
-import { fromEvent, merge } from 'rxjs';
-import { delay, takeUntil } from 'rxjs/operators';
+import { fromEvent, interval, merge, Subscription } from 'rxjs';
+import { delay, takeUntil, takeWhile} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +15,13 @@ export class CarouselService {
   offsetX: number = 0;
   indexStart: number = 0;
   indexFinish?: number;
+  indexAuto: number = 0;
+  auto?: any = true;
 
   constructor() { }
 
   init(target: ElementRef | undefined): void {
+
     this.childrens = [...[target?.nativeElement][0].children];
     this.size = this.childrens[0].scrollWidth;
 
@@ -34,6 +37,22 @@ export class CarouselService {
 
     document.querySelectorAll('img').forEach(i => i.ondragstart = () => false);
 
+    interval(5000)
+      .pipe(
+        takeWhile(() => {
+          return true
+        }),
+      )
+      .subscribe(()=> {
+        if(
+          this.auto
+        ) {
+          this.indexAuto >= this.childrens.length-1 ? this.indexAuto = 0 : this.indexAuto++;
+          this.select(this.indexAuto)
+        }
+      })
+
+
     merge(mousedown, touchstart)
       .subscribe(
         (eventInit: any) => {
@@ -48,6 +67,8 @@ export class CarouselService {
             .subscribe(
               (eventMove: any) => {
 
+                this.auto = false;
+
                 let screenX = eventMove.screenX || eventMove.touches[0].screenX;
 
                 let diference = this.offsetX - screenX;
@@ -56,13 +77,13 @@ export class CarouselService {
 
                 let moving = diference > 0 ? 1 : -1;
 
-                this.indexFinish = this.indexStart + moving;
+                this.indexFinish = this.indexAuto = this.indexStart + moving;
 
                 if (this.indexFinish < 0) {
-                  this.indexFinish = 0;
+                  this.indexFinish = this.childrens.length-1;
                 }
                 if (this.indexFinish >= this.childrens.length) {
-                  this.indexFinish = this.childrens.length-1;
+                  this.indexFinish = 0;
                 }
 
                 this.select(this.indexFinish)
@@ -79,6 +100,7 @@ export class CarouselService {
       block: "center",
     })
     this.selected = index;
+    this.auto = true;
   }
 
 }
