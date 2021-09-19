@@ -4,7 +4,8 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat
 import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
 import { Observable } from 'rxjs';
-import { AuthProvider, User } from './auth.types';
+import { map } from 'rxjs/operators';
+import { AuthOptions, AuthProvider, User } from './auth.types';
 
 
 @Injectable({
@@ -12,14 +13,31 @@ import { AuthProvider, User } from './auth.types';
 })
 export class AuthService {
 
-  userData$: Observable<firebase.User> | undefined;
+  authState$: Observable<firebase.User | null> | undefined;
 
   constructor(
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
     private router: Router
   ) {
-    // this.userData$ = afAuth.authState;
+    this.authState$ = this.afAuth.authState
+  }
+
+  get isAuth(): Observable<boolean> {
+    return this.authState$!.pipe(map(user => user !== null))
+  }
+
+  authenticate({ is, provider, user }: AuthOptions): Promise<firebase.auth.AuthCredential | void> | void {
+    let operation: Promise<firebase.auth.AuthCredential | void> | void
+    if (provider !== AuthProvider.Email) {
+      operation = this.sign(provider);
+    } else {
+      if (is != 'forgot')
+        operation = is == 'signIn' ? this.signIn(user) : this.signUp(user)
+      else
+        operation = this.forgot(user)
+    }
+    return operation;
   }
 
   logout(): Promise<void> {
