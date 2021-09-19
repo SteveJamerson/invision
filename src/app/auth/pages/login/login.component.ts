@@ -1,6 +1,7 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CarouselService } from 'src/app/core/services/carousel.service';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -40,7 +41,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ]
 
   constructor(
-    readonly carouselService: CarouselService
+    readonly carouselService: CarouselService,
+    private authService: AuthService,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
@@ -48,11 +51,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.carouselService.init(this.carousel)
-  }
-
-  log(msg: any):void {
-    console.log(msg);
-
   }
 
 }
