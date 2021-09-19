@@ -1,46 +1,56 @@
 <div class="login container-fluid">
   <main class="row m-0">
     <div class="slide col-12 col-sm-6">
-        <div class="row lex-column align-items-center">
-          <div class="carousel">
-            <div class="carousel-items" #carousel>
-              <div class="carousel-item" *ngFor="let slide of slides; index as i">
-                <img
-                  src={{slide.image}}
-                  alt="imagem ilustrativa"
-                  title="ilustração"
-                  class="m-bottom-5"
-                />
-                <h5>{{slide.title}}</h5>
-                <p>
-                  {{
-                    slide.text
-                  }}
-                </p>
-              </div>
-            </div>
-            <div class="carousel-nav">
-              <input
-                  *ngFor="let slide of slides; index as i"
-                  type="radio"
-                  name="carousel-select"
-                  class="dot"
-                  [checked]="i == this.carouselService.selected ? true : false"
-                  (click)="this.carouselService.select(i)"
-                />
+      <div class="row lex-column align-items-center">
+        <div class="carousel">
+          <div class="carousel-items" #carousel>
+            <div class="carousel-item" *ngFor="let slide of slides; index as i">
+              <img
+                src="{{ slide.image }}"
+                alt="imagem ilustrativa"
+                title="ilustração"
+                class="m-bottom-5"
+              />
+              <h5>{{ slide.title }}</h5>
+              <p>
+                {{ slide.text }}
+              </p>
             </div>
           </div>
-
+          <div class="carousel-nav">
+            <input
+              *ngFor="let slide of slides; index as i"
+              type="radio"
+              name="carousel-select"
+              class="dot"
+              [checked]="i == this.carouselService.selected ? true : false"
+              (click)="this.carouselService.select(i)"
+            />
+          </div>
         </div>
+      </div>
     </div>
-    <form class="col-12 col-sm-6">
+    <form class="col-12 col-sm-6" [formGroup]="authForm" (submit)="onSubmit(authProviders.Email)">
       <h2 class="m-left-auto text-dark fw-700">Invision</h2>
-      <h3 class="m-5">Welcome to Invision</h3>
+      <h3 class="m-5">{{ configs.actionTitle }}</h3>
       <div class="row">
         <div class="col-12">
+          <div class="input-group" *ngIf="configs.is == 'signUp'">
+            <label for="text" class="input-label">Full Name</label>
+            <input
+              formControlName="name"
+              type="name"
+              name="name"
+              id="name"
+              class="input-field"
+              required
+            />
+            <!-- <small class="input-invalid">Invalid</small> -->
+          </div>
           <div class="input-group">
             <label for="email" class="input-label">Users name or Email</label>
             <input
+              formControlName="email"
               type="email"
               name="email"
               id="email"
@@ -49,9 +59,10 @@
             />
             <!-- <small class="input-invalid">Invalid</small> -->
           </div>
-          <div class="input-group">
+          <div class="input-group" *ngIf="configs.is != 'forgot'">
             <label for="password" class="input-label">Password</label>
             <input
+              formControlName="password"
               type="password"
               name="password"
               id="password"
@@ -62,29 +73,53 @@
           </div>
         </div>
         <div class="col-12 text-right">
-          <button type="button" class="button button-inline ">
+          <button
+            type="button"
+            class="button button-inline"
+            (click)="changeAuthAction('forgot')"
+          >
             Forgot password?
           </button>
         </div>
       </div>
-      <button type="button" class="button button-primary button-sign m-4">
-        Sign in
+      <button
+        type="button"
+        class="button button-primary button-sign m-4"
+        type="submit"
+
+        [disabled]="authForm!.invalid || loading"
+      >
+        {{ configs.action }}
       </button>
       <hr />
       <button
         type="button"
         class="button button-icon button-secondary shadow m-4"
+        (click)="onSubmit(authProviders.Google)"
       >
         <app-google></app-google>
         Sign in with Google
       </button>
-      <p>
-        New <strong>Invision</strong>?
+      <p class="text-center">
+        <ng-container *ngIf="configs.is != 'forgot'">
+          <ng-container *ngIf="configs.is == 'signIn'">
+            New <strong>Invision</strong>?
+          </ng-container>
+          <ng-container *ngIf="configs.is == 'signUp'">
+            <p class="m-bottom-0">By signing up, you agree to <strong>Invision</strong></p>
+            <p>
+              <a href="#">Terms of Conditions</a> and
+              <a href="#">Privacy Policy</a>
+            </p>
+            Already on <strong>Invision</strong>?
+          </ng-container>
+        </ng-container>
         <button
           type="button"
           class="button button-link button-inline text-green"
+          (click)="changeAuthAction(configs.isChange)"
         >
-          Create Account
+          {{ configs.actionChange }}
         </button>
       </p>
     </form>
