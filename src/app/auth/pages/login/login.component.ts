@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   configs = this.actions['signUp']
 
   loading: boolean = false;
+  error: string = "";
 
   authForm!: FormGroup;
   authProviders = AuthProvider;
@@ -136,6 +137,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   async onSubmit(provider: AuthProvider): Promise<void> {
+    if(this.configs.is == 'forgot') {
+      this.configs =  this.actions['signIn']
+    }
+
+    this.error = "";
     this.loading = !this.loading;
     try {
       const credential = await this.authService.authenticate({
@@ -156,8 +162,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           break;
       }
       this.router.navigate([this.route.snapshot.queryParamMap.get('redirect') || '/dashboard']);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      this.error = error.code
     } finally {
       setTimeout(() => {
         this.loading = !this.loading;

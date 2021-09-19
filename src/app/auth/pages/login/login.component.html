@@ -52,7 +52,7 @@
             </small>
           </div>
           <div class="input-group">
-            <label for="email" class="input-label">Users name or Email</label>
+            <label for="email" class="input-label">{{configs.is == 'signIn' ? 'Email' : 'Email'}}</label>
             <input
               formControlName="email"
               type="email"
@@ -68,7 +68,7 @@
             </small>
           </div>
           <div class="input-group" *ngIf="configs.is != 'forgot'">
-            <label for="password" class="input-label">Password</label>
+            <label for="password" class="input-label">{{configs.is == 'signIn' ? 'Password' : 'Create Password'}}</label>
             <input
               formControlName="password"
               type="password"
@@ -92,6 +92,8 @@
           >
             Forgot password?
           </button>
+          <p class="input-invalidation text-center" *ngIf="this.error != ''">{{this.error}}</p>
+
         </div>
       </div>
       <button
