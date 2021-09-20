@@ -1,7 +1,7 @@
 <div class="login container-fluid">
-  <main class="row m-0">
+  <main class="row">
     <div class="slide col-12 col-sm-6">
-      <div class="row lex-column align-items-center">
+      <div class="row lex-column align-items-center col-12 col-lg-10">
         <div class="carousel">
           <div class="carousel-items" #carousel>
             <div class="carousel-item" *ngFor="let slide of slides; index as i">
@@ -11,8 +11,8 @@
                 title="ilustração"
                 class="m-bottom-5"
               />
-              <h5>{{ slide.title }}</h5>
-              <p>
+              <h5 class="fs-2">{{ slide.title }} {{i}}</h5>
+              <p class="fs-5">
                 {{ slide.text }}
               </p>
             </div>
@@ -32,11 +32,10 @@
     </div>
     <form class="col-12 col-sm-6" [formGroup]="authForm" (submit)="onSubmit(authProviders.Email)">
       <h2 class="m-left-auto text-dark fw-700">Invision</h2>
-      <h3 class="m-5">{{ configs.actionTitle }}</h3>
+      <h3 class="m-5 text-center">{{ configs.actionTitle }}</h3>
       <div class="row">
         <div class="col-12">
           <div class="input-group" *ngIf="configs.is == 'signUp'">
-            <label for="text" class="input-label">Full Name</label>
             <input
               formControlName="name"
               type="name"
@@ -44,15 +43,16 @@
               id="name"
               class="input-field"
               [class.input-invalid]="name.dirty && (name.hasError('required') || name.hasError('minlength'))"
+              [class.input-float]="name.value != ''"
               required
             />
+            <label for="text" class="input-label">Full Name</label>
             <small class="input-invalidation" *ngIf="name.dirty && name.hasError('required')">Este campo não pode ser vazio</small>
             <small class="input-invalidation" *ngIf="name.dirty && name.hasError('minlength')">
-              Minimo de 3 Caracteres.
+              O nome não pode ter menos de 3 caracteres
             </small>
           </div>
           <div class="input-group">
-            <label for="email" class="input-label">{{configs.is == 'signIn' ? 'Email' : 'Email'}}</label>
             <input
               formControlName="email"
               type="email"
@@ -60,15 +60,16 @@
               id="email"
               class="input-field"
               [class.input-invalid]="email.dirty && (email.hasError('required') || email.hasError('email'))"
+              [class.input-float]="email.value != ''"
               required
             />
+            <label for="email" class="input-label">{{configs.is == 'signIn' ? 'Email' : 'Email'}}</label>
             <small class="input-invalidation" *ngIf="email.dirty && email.hasError('required')">Este campo não pode ser vazio</small>
             <small class="input-invalidation" *ngIf="email.dirty && email.hasError('email')">
               o e-mail está incorreto
             </small>
           </div>
           <div class="input-group" *ngIf="configs.is != 'forgot'">
-            <label for="password" class="input-label">{{configs.is == 'signIn' ? 'Password' : 'Create Password'}}</label>
             <input
               formControlName="password"
               type="password"
@@ -76,11 +77,13 @@
               id="password"
               class="input-field"
               [class.input-invalid]="password.dirty && (password.hasError('required') || password.hasError('minlength'))"
+              [class.input-float]="password.value != ''"
               required
             />
+            <label for="password" class="input-label">{{configs.is == 'signIn' ? 'Password' : 'Create Password'}}</label>
             <small class="input-invalidation" *ngIf="password.dirty && password.hasError('required')">Este campo não pode ser vazio</small>
             <small class="input-invalidation" *ngIf="password.dirty && password.hasError('minlength')">
-              Minimo de 6 Caracteres.
+              A senha não pode ter menos de 6 caracteres
             </small>
           </div>
         </div>
