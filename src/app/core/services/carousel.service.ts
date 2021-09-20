@@ -1,6 +1,6 @@
-import { ElementRef, Injectable, OnDestroy, ViewChild } from '@angular/core';
+import { ElementRef, Injectable, ViewChild } from '@angular/core';
 import { fromEvent, interval, merge, Subscription } from 'rxjs';
-import { delay, takeUntil, takeWhile} from 'rxjs/operators';
+import { take, takeUntil, takeWhile} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,7 @@ export class CarouselService{
   indexFinish?: number;
   indexAuto: number = 0;
   loop?: Subscription;
+  transform: number = 0;
 
   constructor() { }
 
@@ -35,6 +36,9 @@ export class CarouselService{
     let touchmove = fromEvent(document, 'touchmove');
     let touchend = fromEvent(document, 'touchend');
 
+    //scroll document
+    let scroll = fromEvent(document, 'scroll')
+
     document.querySelectorAll('img').forEach(i => i.ondragstart = () => false);
 
     this.loop = this.auto();
@@ -43,13 +47,14 @@ export class CarouselService{
       .subscribe(
         (eventInit: any) => {
           this.offsetX = eventInit.screenX || eventInit.touches[0].screenX;
-          this.indexStart = Math.round(eventInit.target.scrollLeft / this.size);
+          this.indexStart = Math.round(this.transform / this.size);
 
-          this.loop?.unsubscribe()
+          this.loop?.unsubscribe();
 
-          merge(mousemove, touchmove)
+          merge(mousemove, touchmove, scroll)
             .pipe(
-              takeUntil(mouseup || touchend)
+              takeUntil(mouseup || touchend),
+              take(3)
             )
             .subscribe(
               (eventMove: any) => {
@@ -58,7 +63,7 @@ export class CarouselService{
 
                 let diference = this.offsetX - screenX;
 
-                if(Math.abs(diference) < 20) return
+                if(Math.abs(diference) < 1) return
 
                 let moving = diference > 0 ? 1 : -1;
 
@@ -70,22 +75,34 @@ export class CarouselService{
                 if (this.indexFinish >= this.childrens.length) {
                   this.indexFinish = 0;
                 }
-
                 this.select(this.indexFinish);
               },
-              () => {},
-              () => {this.loop = this.auto()}
+              () => {
+              },
+              () => {
+                this.loop = this.auto()
+              }
             )
         }
       )
   }
 
   select(index: number): void {
-    this.childrens[+index]?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    })
+    const scrollLeft = index * this.size;
+
+    const target = this.childrens[+index].parentElement!;
     this.selected = this.indexAuto = index;
+    this.transform = scrollLeft;
+
+    // Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini
+    if(/iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(navigator.userAgent) ) {
+      this.childrens.map(children => {
+        children.style.transform = `translateX(-${this.transform}px)`;
+      })
+    }
+    else {
+      target.scrollLeft = scrollLeft;
+    }
   }
 
   auto(time: number = 5000): Subscription {
