@@ -10,6 +10,12 @@
   }
 }
 
+@each $fs, $value in $font-sizes {
+  .fs-#{$fs} {
+    --size: #{$value};
+  }
+}
+
 @each $w, $value in $width {
   .w-#{$w} {
     @if $w == auto {

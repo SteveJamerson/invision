@@ -15,7 +15,6 @@
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     cursor: move;
-    transition-delay: 5s;
 
     &:hover {
       cursor: move;
@@ -60,8 +59,10 @@
     height: auto;
     pointer-events: none;
     margin: 0!important;
+    padding: 0!important;
     position: relative;
     scroll-snap-align: center;
+    transition: 1s;
   }
 
   &-nav {

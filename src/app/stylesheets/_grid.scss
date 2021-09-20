@@ -33,18 +33,10 @@ $cols: 12,11,10,9,8,7,6,5,4,3,2,1 !default;
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin: {
-    right: -1rem;
-    left: -1rem;
-  };
 
   &>* {
     width: 100%;
     max-width: 100%;
-    padding: {
-      left: var(--gutter);
-      right: var(--gutter);
-    }
   }
 }
 

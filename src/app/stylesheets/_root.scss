@@ -1,6 +1,5 @@
 :root {
   --containerSize: auto;
-  --gutter: 1rem;
 
   @include for-min-xs {
     --containerSize: 540px;

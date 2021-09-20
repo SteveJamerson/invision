@@ -18,10 +18,6 @@
   }
 
   &-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    grid-gap: 1rem;
     svg, i {
       width: 1.5rem;
       height: auto;
@@ -29,7 +25,8 @@
   }
 
   &:disabled {
-    opacity: .7;
+    opacity: .5;
+    cursor: not-allowed
   }
 }
 
