@@ -33,7 +33,7 @@
     <form class="col-12 col-sm-6" [formGroup]="authForm" (submit)="onSubmit(authProviders.Email)">
       <h2 class="m-left-auto text-dark fw-700">Invision</h2>
       <h3 class="m-5 text-center">{{ configs.actionTitle }}</h3>
-      <div class="row">
+      <div class="row col-12 col-xs-10 col-lg-8 w-12">
         <div class="col-12">
           <div class="input-group" *ngIf="configs.is == 'signUp'">
             <input
@@ -59,13 +59,13 @@
               name="email"
               id="email"
               class="input-field"
-              [class.input-invalid]="email.dirty && (email.hasError('required') || email.hasError('email'))"
+              [class.input-invalid]="email.dirty && (email.hasError('required') || email.hasError('email') || email.hasError('pattern'))"
               [class.input-float]="email.value != ''"
               required
             />
             <label for="email" class="input-label">{{configs.is == 'signIn' ? 'Email' : 'Email'}}</label>
             <small class="input-invalidation" *ngIf="email.dirty && email.hasError('required')">Este campo não pode ser vazio</small>
-            <small class="input-invalidation" *ngIf="email.dirty && email.hasError('email')">
+            <small class="input-invalidation" *ngIf="email.dirty && (email.hasError('email') || email.hasError('pattern'))">
               o e-mail está incorreto
             </small>
           </div>

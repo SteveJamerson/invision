@@ -1,6 +1,6 @@
 import { ElementRef, Injectable, ViewChild } from '@angular/core';
 import { fromEvent, interval, merge, Subscription } from 'rxjs';
-import { take, takeUntil, takeWhile} from 'rxjs/operators';
+import { debounceTime, take, takeUntil, takeWhile} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,16 @@ export class CarouselService{
     //scroll document
     let scroll = fromEvent(document, 'scroll')
 
-    document.querySelectorAll('img').forEach(i => i.ondragstart = () => false);
+    //resize
+    let resize = fromEvent(window, 'resize')
+    .pipe(
+      debounceTime(100)
+    )
+    .subscribe(
+      () => {
+        this.size = this.childrens[0].scrollWidth;
+      }
+    );
 
     this.loop = this.auto();
 

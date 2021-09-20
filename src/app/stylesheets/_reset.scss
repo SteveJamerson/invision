@@ -413,3 +413,8 @@ progress {
 [hidden] {
   display: none !important;
 }
+
+::selection {
+  background-color: $green;
+  color: $white;
+}
