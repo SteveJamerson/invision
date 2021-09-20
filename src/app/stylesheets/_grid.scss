@@ -1,5 +1,5 @@
 .container {
-  width: var(--containerSize);
+  max-width: var(--containerSize);
   display: block;
   margin: 0 auto;
 }
